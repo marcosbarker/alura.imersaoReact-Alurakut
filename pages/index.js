@@ -63,13 +63,17 @@ export default function Home() {
     'juunegreiros'
   ]
 
-const seguidores = fetch('https://api.github.com/users/marcosbarker/followers')
-.then(function(respostaDoServidor){
-    return(respostaDoServidor.json())
-})
-.then(function(respostaCompleta) {
-    console.log(respostaCompleta)
-})
+const [seguidores, setSeguidores] = React.useState([]);
+
+React.useEffect(function(){
+  fetch('https://api.github.com/users/marcosbarker/followers')
+  .then(function(respostaDoServidor){
+      return(respostaDoServidor.json())
+  })
+  .then(function(respostaCompleta) {
+    setSeguidores(respostaCompleta);
+  })
+}, [])
 
   return (
     <>
