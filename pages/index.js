@@ -50,11 +50,7 @@ function ProfileRelationsBox(propriedades) {
 export default function Home() {
   const githubUser = 'marcosbarker';
 
-  const [comunidades, setComunidades] = React.useState([{
-    id: '513213',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }]);
+  const [comunidades, setComunidades] = React.useState([]);
 
  
   const pessoasFavoritas = [
@@ -73,7 +69,32 @@ React.useEffect(function(){
   .then(function(respostaCompleta) {
     setSeguidores(respostaCompleta);
   })
+
+  //dato cms (graphQl)
+  fetch('https://graphql.datocms.com/', {
+    method: 'POST',
+    headers: {
+      'Authorization': '0d8bb25863c04b6aa6761f71596269',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+
+    body: JSON.stringify({ "query": `query {
+      allCommunities {
+        id
+        title
+        imageUrl
+      }
+    }`})
+  })
+  .then((response) => response.json()) //pega o retorno do response .json e ja retorna
+  .then((respostaCompleta) => {
+    const comunidadesVindasDodato = respostaCompleta.data.allCommunities;
+  
+    setComunidades(comunidadesVindasDodato)
+    })
 }, [])
+
 
   return (
     <>
@@ -98,15 +119,25 @@ React.useEffect(function(){
               const dadosDoForm = new FormData(e.target);
 
               const comunidade ={
-                id: new Date().toISOString(),
-                titulo: dadosDoForm.get('title'),
+                title: dadosDoForm.get('title'),
                 image: dadosDoForm.get('image'),
-
               }
-              
+
+              fetch('/api/comunidades', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(comunidade),
+              })
+              .then(async (response) => {
+                const dados = await response.json();
+
+              const comunidade = dados.registroCriado;  
+
               const comunidadesAtualizadas = [...comunidades, comunidade];
               setComunidades(comunidadesAtualizadas)
-
+              })
             }} >
               <div>
                 <input
@@ -141,8 +172,8 @@ React.useEffect(function(){
               {comunidades.map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
-                    <a href={`/users/${itemAtual.title}`} >
-                      <img src={itemAtual.image} />
+                    <a href={`/comunidades/${itemAtual.id}`} >
+                      <img src={itemAtual.imageUrl} />
                       <span>{itemAtual.title}</span>
                     </a>
                   </li>
