@@ -1,11 +1,11 @@
 import React from 'react';
-// Hook do NextJS
+
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [githubUser, setGithubUser] = React.useState('omariosouto');
+  const [githubUser, setGithubUser] = React.useState('marcosbarker');
 
   return (
     <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -35,7 +35,7 @@ export default function LoginScreen() {
                     const token = dadosDaResposta.token;
                     nookies.set(null, 'USER_TOKEN', token, {
                         path: '/',
-                        maxAge: 86400 * 7 
+                        maxAge: 1200 //20min
                     })
                     router.push('/')
                 })
