@@ -35,7 +35,7 @@ export default function LoginScreen() {
                     const token = dadosDaResposta.token;
                     nookies.set(null, 'USER_TOKEN', token, {
                         path: '/',
-                        maxAge: 1200 //20min
+                        maxAge: 10000
                     })
                     router.push('/')
                 })
