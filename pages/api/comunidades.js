@@ -9,9 +9,6 @@ export default async function recebedorDeRequests(request, response){
     const registroCriado = await client.items.create({
       itemType: "975359", //id do model community do datocms
       ...request.body,
-      
-      //title: "Teste de comunidade",
-      //imageUrl: "https://github.com/marcosbarker.png",
     })
 
     response.json({

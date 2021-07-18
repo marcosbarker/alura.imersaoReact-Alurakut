@@ -5,7 +5,7 @@ import nookies from 'nookies';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [githubUser, setGithubUser] = React.useState('marcosbarker');
+  const [githubUser, setGithubUser] = React.useState('');
 
   return (
     <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -35,7 +35,7 @@ export default function LoginScreen() {
                     const token = dadosDaResposta.token;
                     nookies.set(null, 'USER_TOKEN', token, {
                         path: '/',
-                        maxAge: 10000
+                        maxAge: 86400
                     })
                     router.push('/')
                 })
@@ -44,7 +44,7 @@ export default function LoginScreen() {
               Acesse agora mesmo com seu usuário do <strong>GitHub</strong>!
           </p>
             <input
-                placeholder="Usuário"
+                placeholder="Entre com seu usuário GitHub"
                 value={githubUser}
                 onChange={(evento) => {
                     setGithubUser(evento.target.value)

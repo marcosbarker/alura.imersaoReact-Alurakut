@@ -33,24 +33,14 @@ function ProfileRelationsBox(propriedades) {
            <h2 className="smallTitle">
             {propriedades.title} ({propriedades.items.length})
           </h2>
-         {  /* <ul>
-              {seguidores.map((itemAtual) => {
-                return (
-                  <li key={itemAtual}>
-                    <a href={`https://github.com/${itemAtual}.png`} >
-                      <img src={itemAtual.image} />
-                      <span>{itemAtual.title}</span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>*/}
+         <ul>
+         </ul>
     </ProfileRelationsBoxWrapper>      
   )
 }
 
 export default function Home(props) {
-  const githubUser = props.githuUser;
+  const githubUserAleatorio = props.githubUser;
 
   const [comunidades, setComunidades] = React.useState([]);
 
@@ -58,7 +48,13 @@ export default function Home(props) {
   const pessoasFavoritas = [
     'peas',
     'omariosouto',
-    'juunegreiros'
+    'juunegreiros',
+    'PedroHCAlmeida',
+    'raiocodrigues',
+    'FredericoStilpen',
+    'M4G1Ck',
+    'JpBade',
+    'Volneineves',
   ]
 
 const [seguidores, setSeguidores] = React.useState([]);
@@ -103,7 +99,7 @@ React.useEffect(function(){
       <AlurakutMenu />
       <MainGrid>
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
-          <ProfileSidebar githubUser={githubUser} />
+          <ProfileSidebar githubUser={githubUserAleatorio} />
         </div>
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
           <Box>
@@ -122,7 +118,7 @@ React.useEffect(function(){
 
               const comunidade ={
                 title: dadosDoForm.get('title'),
-                image: dadosDoForm.get('image'),
+                imageUrl: dadosDoForm.get('image'),
               }
 
               fetch('/api/comunidades', {
